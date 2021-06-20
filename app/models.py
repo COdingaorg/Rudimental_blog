@@ -7,28 +7,54 @@ from werkzeug.security import generate_password_hash, check_password_hash
 def load_user(user_id):
   return User.query.get(int(user_id ))
 
-class User(db.Model):
-  __tablename__='users'
-  id = db.Column(db.Integer, primary_key = True)
+class Blog(db.Model):
+  __tablename__='blogs'
+  blog_id = db.Column(db.Integer, primary_key = True)
   title = db.Column(db.String(255))
   content = db.Column(db.String(255))
-  category = db.Column(db.String(255))
-  datePosted = db.Column(db.String(255))
+  datePosted = db.Column(db.DateTime, default=datetime.utcnow)
+  category = db.Column(db.Integer, db.ForeignKey('categories.category_id'))
+  comment = db.Column(db.Integer, db.ForeignKey('comments.comment_id'))
+  posted_by = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-class Categories(db.Model):
+class Category(db.Model):
   __tablename__='categories'
-  id = db.Column(db.Integer, primary_key = True)
+  category_id = db.Column(db.Integer, primary_key = True)
   category = db.Column(db.String(255))
+  blog = db.Column(db.Integer, db.Relationship('Blog', backref='blog', lazy='dynamic'))
 
 class Comment(db.Model):
   __tablename__='comments'
-  id = db.Column(db.Integer, primary_key = True)
+  comment_id = db.Column(db.Integer, primary_key = True)
   comment = db.Column(db.String(255))
+  blog_parent = db.Column(db.Relationship('Blog', backref='blog_parent', lazy='dynamic'))
+  added_by = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+
+class User(UserMixin, db.Model):
+  __tablename__='users'
+  user_id = db.Column(db.Integer, primary_key = True)
+  fname = db.Column(db.String(100))
+  lname = db.Column(db.String(100))
+  email = db.Column(db.String(100))
+  password_hash = db.Column(db.String())
+  user_info = db.Column(db.Integer, db.Relationship('UserInfo', backref='user_info', lazy='dynamic'))
+  user_role = db.Column(db.Integer, db.ForeignKey('roles.role_id'))
+  blog_posted = db.Column(db.Relationship('Blog', backref='blog_posted',lazy='dynamic'))
+  comments_added = db.Column(db.Relationship('Comment', backref='comments_added', lazy='dynamic'))
+
+class UserInfo(db.Model):
+  __tablename__='user_info'
+  user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+  bio = db.Column(db.String(100))
+  profile_photo = db.Column(db.String())
+
+
 
 class Role(db.Model):
   __tablename__='roles'
-  id = db.Column(db.Integer, primary_key = True)
+  role_id = db.Column(db.Integer, primary_key = True)
   role = db.Column(db.String(255))
+  user = db.Column(db.Relationship('User', backref='user_role', lazy='dynamic'))
 
 class Quote:
   '''
