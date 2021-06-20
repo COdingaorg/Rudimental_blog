@@ -1,6 +1,6 @@
 import os
 import urllib.request, json
-from models import Quote
+from app.models import Quote
 
 #getting api key
 quote_url = os.environ.get('API_URL')
