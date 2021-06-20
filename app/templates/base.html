@@ -6,28 +6,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rudimental Blog</title>
-  <link rel="stylesheet" href="../static/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css?q=1280549780">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
 </head>
 
 <body>
   <div class="container">
     {%block navbar%}
-    <nav>
-    <ul class="navbar nav">
-      <li class="nav-item">
-        <a href=""><button>Home</button></a>
-      </li>
-      <li>
-        <a href=""><button>About</button></a>
-      </li>
-      <li>
-        <a href=""><button>Contacts</button></a>
-      </li>
-      <li>
-        <a href=""><button>Blog</button></a>
-      </li>
-    </ul>
-  </nav>
+    <div id="menu">
+      <a class="brand" href="/">RUDIMENTAL</a>
+      <a class="button" href="/">Home</a>
+      <a class="button" href="#">Features</a>
+      <a class="button" href="#">Pricing</a>
+      <a class="button" href="#">Disabled</a>
+    </div>
+    {%endblock%}
+    {%block content%}
     {%endblock%}
   </div>
 </body>
