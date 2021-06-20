@@ -1,11 +1,21 @@
 from . import db, login_manager
+import base64
 from flask_login import UserMixin
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
-@login_manager
+@login_manager.user_loader
 def load_user(user_id):
-  return User.query.get(int(user_id ))
+  return User.query.get(int(user_id))
+
+# @login_manager.header_loader
+# def load_user_from_header(header_val):
+#   header_val = header_val.replace('Basic ', '', 1)
+#   try:
+#     header_val = base64.b64decode(header_val)
+#   except TypeError:
+#         pass
+#   return User.query.filter_by(api_key=header_val).first()
 
 class Blog(db.Model):
   __tablename__='blogs'
@@ -37,14 +47,14 @@ class User(UserMixin, db.Model):
   lname = db.Column(db.String(100))
   email = db.Column(db.String(100))
   password_hash = db.Column(db.String())
-  user_info = db.Column(db.Integer, db.Relationship('UserInfo', backref='user_info', lazy='dynamic'))
+  user_info = db.Column(db.Integer, db.Relationship('Info', backref='user_info', lazy='dynamic'))
   user_role = db.Column(db.Integer, db.ForeignKey('roles.role_id'))
   blog_posted = db.Column(db.Relationship('Blog', backref='blog_posted',lazy='dynamic'))
   comments_added = db.Column(db.Relationship('Comment', backref='comments_added', lazy='dynamic'))
 
-class UserInfo(db.Model):
+class Info(db.Model):
   __tablename__='user_info'
-  user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+  user = db.Column(db.Integer, db.ForeignKey('users.user_id'))
   bio = db.Column(db.String(100))
   profile_photo = db.Column(db.String())
 
