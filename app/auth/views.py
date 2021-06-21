@@ -1,4 +1,4 @@
-from app.auth.forms import LoginForm
+from app.auth.forms import LoginForm, RegisterForm
 from flask_login import login_required, login_user, logout_user
 from flask import url_for, request, render_template, redirect, flash
 from ..models import User
@@ -14,11 +14,17 @@ def login():
       return redirect(request.args.get('next') or url_for('main.index'))
     
     flash('Invalid username or password')
-    title = 'Login Page'
-    return render_template('login.html', title = title)
+  title = 'Login Page'
+  return render_template('auth/login.html', title = title, form = form)
 
 @auth.route('/logout')
 @login_required
 def logout():
   logout_user()
   return redirect(url_for('main.index'))
+
+@auth.route('/register')
+def register():
+  form = RegisterForm
+  if form.validate_on_submit():
+    user = User(fname = form.fname.data, lname = form.lname.data, )
