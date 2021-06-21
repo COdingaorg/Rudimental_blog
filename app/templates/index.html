@@ -6,6 +6,18 @@
 
 {%block content%}
 {{super()}}
-<div class="banner">Welcome to Rudimental<div class="recent_stories">New story 1</div></div>
-<div class="black"><cite><span class="quotes">&OpenCurlyDoubleQuote;</span> <span class="quotes">&CloseCurlyDoubleQuote;</span></cite></div>
+<div class="banner">Welcome to Rudimental<div class="recent_stories">New story 1</div>
+</div>
+<div class="black">
+  <div class="quote">
+    <h4>Quote of the Hour </h4><small>No. {{new_quote.id}}</small><br>
+    <cite>
+      <span class="quotes">&OpenCurlyDoubleQuote;</span>
+      {{new_quote.quote}}
+      <span class="quotes">&CloseCurlyDoubleQuote;</span>
+    </cite><br>
+    <small>~{{new_quote.author}}</small><br>
+    <small><a href='{{new_quote.link}}'>source</a></small><br>
+  </div>
+</div>
 {%endblock%}
