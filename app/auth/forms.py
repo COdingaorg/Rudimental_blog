@@ -22,3 +22,7 @@ class RegisterForm(FlaskForm):
     if User.query.filter_by(email= data_field.data).first():
       raise ValidationError('Email address already taken', 'error')
 
+class UpdateProfile(FlaskForm):
+  bio = StringField('How would you describe your self')
+  submit = SubmitField('Add to Profile')
+

@@ -6,7 +6,45 @@
 
 {%block content%}
 {{super()}}
-<div class="banner">Welcome to Rudimental<div class="recent_stories">New story 1</div>
+<div class="banner">
+
+  <div class="card top_stories col-md-3">
+    <div class="card-header">
+      Quote
+    </div>
+    <div class="card-body">
+      <blockquote class="blockquote mb-0">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+      </blockquote>
+    </div>
+  </div>
+  <div class="card top_stories col-md-3">
+    <div class="card-header">
+      Quote
+    </div>
+    <div class="card-body">
+      <blockquote class="blockquote mb-0">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+      </blockquote>
+    </div>
+  </div>
+  <div class="card top_stories_long col-md-3">
+    <div class="card-header">
+      Quote
+    </div>
+    <div class="card-body">
+      <blockquote class="blockquote mb-0">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+      </blockquote>
+    </div>
+  </div>
+  <h3 class="titleh">Rudimental Blog</h3>
+  <div class="pictorial col-md-6">
+    <p>Rudimental Blog</p>
+  </div>
 </div>
 <div class="black">
   <div class="quote">
@@ -19,5 +57,6 @@
     <small>~{{new_quote.author}}</small><br>
     <small><a href='{{new_quote.link}}'>source</a></small><br>
   </div>
+  
 </div>
 {%endblock%}

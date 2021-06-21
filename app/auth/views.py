@@ -1,7 +1,8 @@
-from app.auth.forms import LoginForm, RegisterForm
+import re
+from app.auth.forms import LoginForm, RegisterForm, UpdateProfile
 from flask_login import login_required, login_user, logout_user
-from flask import url_for, request, render_template, redirect, flash
-from ..models import User, generate_password_hash
+from flask import url_for, request, render_template, redirect, flash,abort
+from ..models import User, generate_password_hash, Info
 from . import auth
 from .. import db
 from ..main.mail import mail_message
@@ -32,7 +33,7 @@ def register():
     lister = list(form.fname.data)
     aNum = randint(0, 2021)
     
-    user = User(fname = form.fname.data, user_role = 1, lname = form.lname.data, username = (form.lname.data)+(lister[0])+str(aNum), email = form.email.data, password_hash = generate_password_hash(form.password.data) )
+    user = User(fname = form.fname.data, lname = form.lname.data, username = (form.lname.data)+(lister[0])+str(aNum), user_role = 1, email = form.email.data, password_hash = generate_password_hash(form.password.data) )
     db.session.add(user)
     db.session.commit()
  
@@ -41,3 +42,35 @@ def register():
     return redirect(url_for('auth.login'))
   title = 'Create Account'
   return render_template('auth/register.html', form = form, title = title)
+
+@auth.route('/<userLogged>')
+@login_required
+def profile(userLogged):
+  user = User.query.filter_by(username = userLogged).first()
+  if user is None:
+    abort(404)
+  
+  user_name = (user.fname) + (user.lname)
+  email = user.email
+  user_info = Info.query.filter_by(info_id = user.user_info).first()
+  bio = user_info.bio
+
+  return render_template('auth/profile.html', username= user_name, email = email, user_info = user_info, bio = bio)
+
+@auth.route('/<userLogged>/profile')
+@login_required
+def update_profile(userLogged):
+  form = UpdateProfile()
+  if form.validate_on_submit():
+    user = User.query.filter_by(username = userLogged).first()
+    if user is None:
+      abort(404)
+
+    user.bio = form.bio.data
+
+    db.session.add(user.bio)
+    db.session.commit()
+
+    return redirect(url_for('auth.profile'))
+  title = 'Update Profile'
+  return render_template('auth/updateprofile.html', form = form, title = title)

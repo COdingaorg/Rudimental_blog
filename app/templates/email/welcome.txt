@@ -1,0 +1,12 @@
+Hello {{user.lname}}
+Welcome to Rudimental Blog.
+Here we talk about anything and everything. 
+Our writers delve into various topics including Technology, mental health, lifestyle and much more.
+
+If you sign up to our newsletter you will be notified on new blogs posted. 
+Its a good life and we live it like we know it.
+
+Thank you for signing up. See you on the other side.
+
+Regards,
+Rudimental Team.

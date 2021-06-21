@@ -1,0 +1,10 @@
+{%extends 'base.html'%}
+{%import 'bootstrap/wtf.html' as wtf%}
+
+{%block content%}
+{{title}}
+
+{{wtf.quick_form(form)}}
+
+<blockquote>Thank you for being a member of Rudimental Blog</blockquote>
+{%endblock%}

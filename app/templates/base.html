@@ -20,7 +20,7 @@
       <a class="button" href="#">Pricing</a>
       <a class="button" href="#">Disabled</a>
       {% if current_user.is_authenticated()%}
-      <span class="username">Logged in as: {{current_user.username}}</span>
+      <span class="username"><a href="{{url_for('auth.profile', userLogged = current_user.username)}}"> Logged in as: {{current_user.username}}</a></span>
       <a style="color: white; font-size: 1.2em; border: 2px 0 2px 0; text-decoration: none;" href="{{url_for('auth.logout')}}"> | Logout |</a>
       {%else%}
       <a style="color: white; font-size: 1.2em; border: 2px 0 2px 0; text-decoration: none;" href="{{url_for('auth.login')}}"> | Login |</a>
