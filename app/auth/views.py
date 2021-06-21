@@ -33,7 +33,7 @@ def register():
     lister = list(form.fname.data)
     aNum = randint(0, 2021)
     
-    user = User(fname = form.fname.data, lname = form.lname.data, username = (form.lname.data)+(lister[0])+str(aNum), user_role = 1, email = form.email.data, password_hash = generate_password_hash(form.password.data) )
+    user = User(fname = form.fname.data, lname = form.lname.data, username = (form.lname.data)+(lister[0])+str(aNum), user_role = 3, email = form.email.data, password_hash = generate_password_hash(form.password.data) )
     db.session.add(user)
     db.session.commit()
  
@@ -50,14 +50,10 @@ def profile(userLogged):
   if user is None:
     abort(404)
   
-  user_name = (user.fname) + (user.lname)
-  email = user.email
-  user_info = Info.query.filter_by(info_id = user.user_info).first()
-  bio = user_info.bio
+  user = user
+  return render_template('auth/profile.html', user = user)
 
-  return render_template('auth/profile.html', username= user_name, email = email, user_info = user_info, bio = bio)
-
-@auth.route('/<userLogged>/profile')
+@auth.route('/<userLogged>/profile', methods= ['GET', 'POST'])
 @login_required
 def update_profile(userLogged):
   form = UpdateProfile()
