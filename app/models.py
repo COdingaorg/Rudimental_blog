@@ -58,7 +58,7 @@ class User(UserMixin, db.Model):
 
   def get_id(self):
     return (self.user_id)
-    
+
   @property
   def password(self):
     raise ValidationError('Password is hidden')
@@ -69,6 +69,12 @@ class User(UserMixin, db.Model):
   
   def verify_password(self, password):
     return check_password_hash(self.password_hash, password)
+
+  def make_admin(self):
+    self.user_role = 1
+
+  def make_writer(self):
+    self.user_role = 2
 
   def __repr__(self):
     return ('<User %r>' % self.fname)

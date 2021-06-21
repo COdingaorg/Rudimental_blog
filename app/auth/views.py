@@ -32,7 +32,7 @@ def register():
     lister = list(form.fname.data)
     aNum = randint(0, 2021)
     
-    user = User(fname = form.fname.data, lname = form.lname.data, username = (form.lname.data)+(lister[0])+str(aNum), email = form.email.data, password_hash = generate_password_hash(form.password.data) )
+    user = User(fname = form.fname.data, user_role = 1, lname = form.lname.data, username = (form.lname.data)+(lister[0])+str(aNum), email = form.email.data, password_hash = generate_password_hash(form.password.data) )
     db.session.add(user)
     db.session.commit()
  
