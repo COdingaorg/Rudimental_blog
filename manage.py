@@ -1,4 +1,3 @@
-from logging import Manager
 import os
 from app import create_app, db
 from flask_migrate import Migrate, MigrateCommand
