@@ -7,3 +7,4 @@ def index():
 
   new_quote = get_quotes()
   return render_template('index.html', new_quote = new_quote)
+
