@@ -12,13 +12,13 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
   fname = StringField('First Name: ', validators=[Required()])
-  lname = StringField('First Name: ', validators=[Required()])
+  lname = StringField('Last Name: ', validators=[Required()])
   email = StringField('email address', validators=[Required(), Email()])
-  password = StringField('Enter password', validators=[Required(), EqualTo('confirm_password', message = 'password must be the same')])
-  confirm_password = StringField('Confirm password', validators=[Required()])
+  password = PasswordField('Enter password', validators=[Required(), EqualTo('confirm_password', message = 'password must be the same')])
+  confirm_password = PasswordField('Confirm password', validators=[Required()])
   submit = SubmitField('sign up')
 
   def validate_email(self, data_field):
-    if User.query.filter_by(email= data_field.data):
-      raise ValidationError('Email address already taken')
+    if User.query.filter_by(email= data_field.data).first():
+      raise ValidationError('Email address already taken', 'error')
 

@@ -14,12 +14,17 @@
   <div class="container-fluid">
     {%block navbar%}
     <div id="menu">
-      <a class="brand" href="/">RUDIMENTAL                                                                                                                                                                                                                                  </a>
+      <a class="brand" href="/">RUDIMENTAL </a>
       <a class="button" href="/">Home</a>
       <a class="button" href="#">Features</a>
       <a class="button" href="#">Pricing</a>
       <a class="button" href="#">Disabled</a>
+      {% if current_user.is_authenticated()%}
+      <span>{{current_user.username}}</span>
+      <a style="color: white; font-size: 1.2em; border: 2px 0 2px 0;" href="{{url_for('auth.logout')}}">Logout</a>
+      {%else%}
       <a style="color: white; font-size: 1.2em; border: 2px 0 2px 0;" href="{{url_for('auth.login')}}">Login</a>
+      {%endif%}
     </div>
     {%endblock%}
     {%block content%}
