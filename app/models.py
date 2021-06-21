@@ -48,14 +48,15 @@ class User(UserMixin, db.Model):
   lname = db.Column(db.String(100))
   email = db.Column(db.String(100))
   password_hash = db.Column(db.String())
-  user_info = db.relationship('Info', backref='user_info', lazy='dynamic')
+  user_info = db.Column(db.Integer, db.ForeignKey('user_info.info_id'))
   user_role = db.relationship('Role', backref='role', lazy='dynamic')
   blog_posted = db.relationship('Blog', backref='blog_posted',lazy='dynamic')
-  comments_added = db.Column(db.Integer,db.ForeignKey('comments.comment'))
+  comments_added = db.Column(db.Integer,db.ForeignKey('comments.comment_id'))
 
 class Info(db.Model):
   __tablename__='user_info'
-  user = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+  info_id = db.Column(db.Integer, primary_key = True)
+  user = db.relationship('User', backref='user', lazy = 'dynamic')
   bio = db.Column(db.String(100))
   profile_photo = db.Column(db.String())
 
