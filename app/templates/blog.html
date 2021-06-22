@@ -14,7 +14,7 @@
     <blockquote class="blockquote mb-0">
       <footer class="blockquote-footer">category : {{item.category}}<br></r><cite title="Source Title">written By : {{item.posted_by}}</cite></footer>
     </blockquote>
-    <a href="{{url_for('main.addcomment', userLogged = current_user, blogn = blog.blog_id)}}" class="btn btn-primary">comment</a>
+    <a href="{{url_for('main.addcomment', userLogged = current_user, blogn = item.blog_id)}}" class="btn btn-primary">comment</a>
   </div>
 </div>
 {%endfor%}

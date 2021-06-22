@@ -4,7 +4,7 @@ from wtforms.fields.simple import FileField, SubmitField, TextAreaField
 from wtforms.validators import Required, Length
 
 class CommentForm(FlaskForm):
-  comment_id = StringField('Your comment')
+  comment = StringField('Your comment')
   submit = SubmitField('comment')
 
 class BlogForm(FlaskForm):

@@ -1,5 +1,18 @@
+{%extends 'base.html'%}
+{%import 'bootstrap/wtf.html' as wtf%}
+
+{%block content%}
+
+{{wtf.quick_form(form)}}
+
+{%if comments|length == 0%}
+<p>No comments available</p>
+{%else%}
+
+{%for comment in comments%}
 <div class="card" style="width: 18rem;">
   <div class="card-header">
+    
     {{comment.added_by}}
   </div>
     <blockquote class="blockquote mb-0">
@@ -8,3 +21,6 @@
     <a href="{{url_for('main.addblog')}}" class="btn btn-primary">back</a>
   </div>
 </div>
+{%endfor%}
+{%endif%}
+{%endblock%}

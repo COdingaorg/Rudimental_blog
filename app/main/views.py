@@ -51,22 +51,22 @@ def addblogphotos(blogn):
     return redirect(url_for('main.addblog', blog = blog))
   return render_template('addblogphotos.html', form = form)
 
-@main.route('/<userLogged>/<blogn>/comment')
+@main.route('/<userLogged>/<blogn>/comment', methods = ['GET', 'POST'])
 @login_required
 def addcomment(blogn, userLogged):
-  userQ = User.query.filter_by(username = userLogged).first()
-  user_id = userQ.user_id
-  blog = Blog.query.filter_by(blog_id = blogn).first()
   form = CommentForm()
   if form.validate_on_submit():
     comm = form.comment.data
-    added_comment = Comment(comment = comm, blog_parent = blog.blog_id, added_by = user_id )
+    user = User.query.filter_by(username = userLogged).first()
+    
+    added_comment = Comment(comment = comm, blog_parent = blogn, added_by = user.user_id )
     db.session.add(added_comment)
     db.session.commit()
 
-    return redirect(url_for('main.addblog', comment = added_comment))
+    return redirect(url_for('main.view_blog', comment = added_comment))
 
-  return render_template('comments.html')
+  comments = Comment.query.filter(Comment.blog_parent.any(Blog.blog_id.in_([1,2,3]))).all()
+  return render_template('comments.html', comments = comments, form = form)
 
 @main.route('/blog')
 def view_blog():
