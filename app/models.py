@@ -23,6 +23,7 @@ def load_user(user_id):
 class Blog(db.Model):
   __tablename__='blogs'
   blog_id = db.Column(db.Integer, primary_key = True)
+  photo_path = db.Column(db.String())
   title = db.Column(db.String(255))
   content = db.Column(db.String(255))
   datePosted = db.Column(db.DateTime, default=datetime.utcnow)

@@ -53,6 +53,23 @@ a.nav-item{
   background-color: white;
   color: rgb(207, 57, 68);
 }
+.addblog{
+  border-radius: 15px;
+  background-color: rgb(207, 57, 68);
+  color: white;
+  position: absolute;
+  float: right;
+  height: 40px;
+  width: 150px;
+  padding:1px;
+  padding-bottom: 15px;
+  font-size: 1.8em;
+  border: 2px solid white;
+}
+.plus{
+  
+  font-weight: bold;
+}
 .banner{
   width: 95vw;
   height: 60vh;
