@@ -4,15 +4,9 @@
 {%block content%}
 {{title}}
 
-<form action = "{{url_for('main.addblog')}}" method="POST" enctype = "multipart/form-data">
-<input type="text" name = title class="form-control" required>
-<label><input type="radio" name='category' value="Technology">Technology</label>
-<label><input type="radio" name='category' value="lifestyle">Lifestyle</label>
-<label><input type="radio" name='category' value="journey">journey</label>
-<textarea type='text' name="content" >Content</textarea>
+{{wtf.quick_form(form)}}
 
-<p><i>Add photos after Publishing</i></p>
-<input type="submit" placeholder="Publish">
-</form>
+  <p><i>Add photos after Publishing</i></p>
+  
 
 {%endblock%}

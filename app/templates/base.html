@@ -16,7 +16,7 @@
     <div id="menu">
       <a class="brand" href="/">RUDIMENTAL </a>
       <a class="button" href="/">Home</a>
-      <a class="button" href="#">Features</a>
+      <a class="button" href="{{url_for('main.view_blog')}}">All Blogs</a>
       <a class="button" href="#">Pricing</a>
       <a class="button" href="#">Disabled</a>
       {% if current_user.is_authenticated()%}

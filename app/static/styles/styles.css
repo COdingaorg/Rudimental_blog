@@ -66,6 +66,9 @@ a.nav-item{
   font-size: 1.8em;
   border: 2px solid white;
 }
+.addblog>a{
+  color: white;
+}
 .plus{
   
   font-weight: bold;

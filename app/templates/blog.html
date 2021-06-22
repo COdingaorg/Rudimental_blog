@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{%block content%} 
+
+{%for item in blog%}
+<div class="card clo-md-10">
+  <div class="card-header">
+    
+    {{item.category_id}}
+  </div>
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{item.title}}</h5>
+    <p class="card-text">{{item.content}}</p>
+    <blockquote class="blockquote mb-0">
+      <footer class="blockquote-footer">category : {{item.category}}<br></r><cite title="Source Title">written By : {{item.posted_by}}</cite></footer>
+    </blockquote>
+    <a href="{{url_for('main.addcomment', userLogged = current_user, blogn = blog.blog_id)}}" class="btn btn-primary">comment</a>
+  </div>
+</div>
+{%endfor%}
+
+{%endblock%}

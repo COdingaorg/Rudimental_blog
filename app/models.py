@@ -25,7 +25,7 @@ class Blog(db.Model):
   blog_id = db.Column(db.Integer, primary_key = True)
   photo_path = db.Column(db.String())
   title = db.Column(db.String(255))
-  content = db.Column(db.String(255))
+  content = db.Column(db.String(6000))
   datePosted = db.Column(db.DateTime, default=datetime.utcnow)
   category = db.Column(db.Integer, db.ForeignKey('categories.category_id'))
   comment = db.Column(db.Integer, db.ForeignKey('comments.comment_id'))
