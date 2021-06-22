@@ -31,13 +31,20 @@ a.nav-item{
   color: rgb(128, 0, 107);
   font-size: 1.4em;
 }
+.blog_categories{
+  width: 60vw;
+}
 #menu{
   background-color: rgb(0,0,0);
   color: rgb(248,68,78);
   height: 9vh;
-  width: 95vw;
   padding: 10px;
  
+}.navcat{
+  width:70vw;
+  border-radius: 25px;
+}.navcat>#menu{
+  background-color: white;
 }
 #menu>a.button{
   background-color: rgb(56, 58, 62);

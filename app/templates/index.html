@@ -46,7 +46,8 @@
     <p>Rudimental Blog</p>
   </div>
 </div>
-<div class="black">
+<div class="row">
+<div class="black col-md-4">
   <div class="quote">
     <h4>Quote of the Hour </h4><small>No. {{new_quote.id}}</small><br>
     <cite>
@@ -57,10 +58,19 @@
     <small>~{{new_quote.author}}</small><br>
     <small><a href='{{new_quote.link}}'>source</a></small><br>
   </div>
-  
-  
+</div>
+<div class="navcat col-md-4"> 
+  <div class="">
+    <div id="menu">
+      <a class="button" href="">Technology </a>
+      <a class="button" href="">Lifestyle</a>
+      <a class="button" href="#">Lifes Journey</a>
+    </div>
+  </div>
+</div>
 </div>
 <div class="addblog">
- <a href="{{url_for('main.addblog', userLogged = current_user.username)}}"> <span class="plus">&plus;</span><span>Add Blog</span></a>
+  <a href="{{url_for('main.addblog', userLogged = current_user.username)}}"> <span class="plus">&plus;</span><span>Add
+      Blog</span></a>
 </div>
 {%endblock%}
