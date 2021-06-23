@@ -11,15 +11,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 def load_user(user_id):
   return User.query.get(int(user_id))
 
-# @login_manager.header_loader
-# def load_user_from_header(header_val):
-#   header_val = header_val.replace('Basic ', '', 1)
-#   try:
-#     header_val = base64.b64decode(header_val)
-#   except TypeError:
-#         pass
-#   return User.query.filter_by(api_key=header_val).first()
-
 class Blog(db.Model):
   __tablename__='blogs'
   blog_id = db.Column(db.Integer, primary_key = True)
@@ -52,10 +43,12 @@ class User(UserMixin, db.Model):
   username = db.Column(db.String(100))
   email = db.Column(db.String(100))
   password_hash = db.Column(db.String())
+  subscribed = db.Column(db.Boolean, default = False)
   user_info = db.Column(db.Integer, db.ForeignKey('user_info.info_id'))
   user_role = db.Column(db.Integer, db.ForeignKey('roles.role_id'))
   blog_posted = db.relationship('Blog', backref='blog_posted',lazy='dynamic')
   comments_added = db.Column(db.Integer,db.ForeignKey('comments.comment_id'))
+  email_list = db.Column(db.Integer, db.ForeignKey('emails.email_id'))
 
   def get_id(self):
     return (self.user_id)
@@ -92,6 +85,12 @@ class Role(db.Model):
   role_id = db.Column(db.Integer, primary_key = True)
   role = db.Column(db.String(255))
   role_user = db.relationship('User', backref='role_user', lazy = 'dynamic')
+
+class MailingList(db.Model):
+  __tablename__='emails'
+  email_id = db.Column(db.Integer, primary_key = True)
+  email = db.Column(db.String())
+  user_in_list = db.relationship('User', backref = 'user_in_list', lazy= 'dynamic')
 
 class Quote:
   '''

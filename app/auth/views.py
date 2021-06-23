@@ -1,4 +1,3 @@
-import re
 from app.auth.forms import LoginForm, RegisterForm, UpdateProfile
 from flask_login import login_required, login_user, logout_user
 from flask import url_for, request, render_template, redirect, flash,abort

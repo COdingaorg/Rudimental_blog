@@ -1,0 +1,10 @@
+Hello {{user}}
+New Post Alert!.
+A new blog post has been added, what, the title, how about you find out
+
+You have received this newletter because you are a member of Rudimental
+
+Thank you for signing up. See you on the other side.
+
+Regards,
+Rudimental Team.

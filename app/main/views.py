@@ -1,4 +1,3 @@
-from app import forms
 from flask.globals import request
 from flask_login import login_required
 from . import main
@@ -6,19 +5,23 @@ from flask import render_template
 from .requests import get_quotes
 from flask import abort, flash, redirect, url_for
 from .. import photos, db
-from ..models import Blog, Category, Comment, User
+from ..models import Blog, Category, Comment, MailingList, User
 from .forms import CommentForm, BlogForm, UploadPhoto
+from ..main.mail import mail_message
 
 
 @main.route('/')
 def index():
+  blog1 = Blog.query.filter_by(blog_id=1).first()
+  blog2 = Blog.query.filter_by(blog_id=2).first()
+  blog3 = Blog.query.filter_by(blog_id=3).first()
 
   new_quote = get_quotes()
-  return render_template('index.html', new_quote = new_quote)
+  return render_template('index.html', new_quote = new_quote, blog1 = blog1, blog2 = blog2, blog3 = blog3)
 
-@main.route('/addblog', methods=["GET",'POST'])
+@main.route('/addblog/<userLogged>', methods=["GET",'POST'])
 @login_required
-def addblog():
+def addblog(userLogged):
   form = BlogForm()
   if form.validate_on_submit():
     title = form.title.data
@@ -30,7 +33,13 @@ def addblog():
     db.session.add(blog)
     db.session.commit()
 
-    return redirect(url_for('main.addblogphotos',blogn = blog.blog_id, blog=blog))
+    email_lists = ['calemasanga@gmail.com']
+    email_list = MailingList.query.filter(MailingList.email).all()
+    email_lists.append(email_list)
+    for email in email_lists:
+      mail_message('New Post has been made', 'email/newpost', email, user=userLogged)
+
+    return redirect(url_for('main.addblogphotos',blogn = blog.blog_id, blogs=blog))
   return render_template('addblog.html', form = form)
 
 
@@ -51,21 +60,24 @@ def addblogphotos(blogn):
     return redirect(url_for('main.addblog', blog = blog))
   return render_template('addblogphotos.html', form = form)
 
-@main.route('/<userLogged>/<blogn>/comment', methods = ['GET', 'POST'])
+@main.route('/<userLog>/<blogn>/comments', methods = ['GET', 'POST'])
 @login_required
-def addcomment(blogn, userLogged):
+def addcomment(blogn, userLog):
   form = CommentForm()
+  userid = (User.query.filter(User.username == userLog).first()).user_id
+  user = Comment.query.get_or_404(userid)
+  blog = Blog.query.get_or_404(blogn)
   if form.validate_on_submit():
     comm = form.comment.data
-    user = User.query.filter_by(username = userLogged).first()
-    
-    added_comment = Comment(comment = comm, blog_parent = blogn, added_by = user.user_id )
+    added_comment = Comment(comment = comm, blog_parent = blog.blog_id, added_by = userid )
     db.session.add(added_comment)
     db.session.commit()
+    flash("Your comment has been added to the post", "success")
+    comments = Comment.query.get_or_404(blog.blog_id).all()
 
     return redirect(url_for('main.view_blog', comment = added_comment))
 
-  comments = Comment.query.filter(Comment.blog_parent.any(Blog.blog_id.in_([1,2,3]))).all()
+  comments = Comment.query.get_or_404(blog.blog_id).all()
   return render_template('comments.html', comments = comments, form = form)
 
 @main.route('/blog')
@@ -74,4 +86,38 @@ def view_blog():
 
   return render_template('blog.html', blog=blog)
 
+@main.route('/<url_link>')
+def view_category(url_link):
+  links = ['https://www.cnet.com/','https://www.menshealth.com/technology-gear/','https://www.goodreads.com/quotes/tag/life-journey']
+  if url_link == '1':
+    url_lin = links[0]
+  elif url_link == '2':
+    url_lin = links[1]
+  else:
+    url_lin = links[2]
 
+  return render_template('index.html', url_link = url_lin)
+
+@main.route('/<userLogged>/subscribed')
+@login_required
+def subscribe(self,userLogged):
+  query1 = User.session.query(User).\
+    filter(User.username == userLogged).one()
+  if query1:
+    query1.subscribed = True
+    db.session.add(query1)#update({'subscribed':(t)})
+    db.session.commit()
+
+  user = User.query.filter(User.subscribed == True).first()
+  if user is not None:
+    user_email = 'calemasanga@gmail.com'
+    user_email = user.email
+    new_email = MailingList(email = user_email, user_in_list = user.user_id)
+    db.session.add(new_email)
+    db.session.commit()
+
+    return redirect(url_for('main.addblog',user = user.subscribed))
+  
+  
+  title = 'Subscribed successfully, Thank you'
+  return render_template('subscribed.html', user = user.subscribed, title = title)

@@ -7,40 +7,40 @@
 {%block content%}
 {{super()}}
 <div class="banner">
-
   <div class="card top_stories col-md-3">
     <div class="card-header">
-      Quote
+      {{blog3.title}}
     </div>
     <div class="card-body">
       <blockquote class="blockquote mb-0">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+        <p>{{blog3.content|truncate(80,true,'...')}}</p>
+        <footer class="blockquote-footer"> {{blog3.posted_by}} <cite title="Source Title">{{blog3.category}}</cite></footer>
       </blockquote>
     </div>
   </div>
   <div class="card top_stories col-md-3">
     <div class="card-header">
-      Quote
+      {{blog2.title}}
     </div>
     <div class="card-body">
       <blockquote class="blockquote mb-0">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+        <p>{{blog2.content|truncate(80,true,'...')}}</p>
+        <footer class="blockquote-footer">{{blog2.posted_by}} <cite title="Source Title">{{blog2.category}}</cite></footer>
       </blockquote>
     </div>
   </div>
   <div class="card top_stories_long col-md-3">
     <div class="card-header">
-      Quote
+      {{blog1.title}}
     </div>
     <div class="card-body">
       <blockquote class="blockquote mb-0">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-        <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+        <p>{{blog1.content|truncate(80,true,'...')}}</p>
+        <footer class="blockquote-footer">{{blog1.posted_by}}  <cite title="Source Title">{{blog1.category}}</cite></footer>
       </blockquote>
     </div>
   </div>
+  
   <h3 class="titleh">Rudimental Blog</h3>
   <div class="pictorial col-md-6">
     <p>Rudimental Blog</p>
@@ -59,14 +59,18 @@
     <small><a href='{{new_quote.link}}'>source</a></small><br>
   </div>
 </div>
-<div class="navcat col-md-4"> 
+<div class="navcat col-md-5"> 
   <div class="">
     <div id="menu">
-      <a class="button" href="">Technology </a>
-      <a class="button" href="">Lifestyle</a>
+      <a class="button" href="#">Technology </a>
+      <a class="button" href="#">Lifestyle</a>
       <a class="button" href="#">Lifes Journey</a>
     </div>
   </div>
+</div>
+<div class="col-md-5">
+  <iframe src="https://www.menshealth.com/technology-gear" frameborder="0"></iframe>
+
 </div>
 </div>
 <div class="addblog">

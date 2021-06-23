@@ -1,0 +1,27 @@
+{%if blogs|length = 0%}
+<p>No items in this category</p>
+
+{%else%}
+
+{%for item in blogs%}
+
+<div class="card clo-md-10">
+  <div class="card-header">
+
+    {{item.category_id}}
+  </div>
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{item.title}}</h5>
+    <p class="card-text">{{item.content}}</p>
+    <blockquote class="blockquote mb-0">
+      <footer class="blockquote-footer">category : {{item.category}}<br></r><cite title="Source Title">written By :
+          {{item.posted_by}}</cite></footer>
+    </blockquote>
+    <a href="{{url_for('main.view_blog', userLogged = current_user, blogn = item.blog_id)}}"
+      class="btn btn-primary">Read Blog</a>
+  </div>
+</div>
+
+{%endfor%}
+{%endif%}
