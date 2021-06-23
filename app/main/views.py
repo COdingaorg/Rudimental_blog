@@ -79,7 +79,7 @@ def addcomment(blogn, userLog):
     db.session.add(added_comment)
     db.session.commit()
     flash("Your comment has been added to the post", "success")
-    comments = Comment.query.get_or_404(blog.blog_id).all()
+    comments = Comment.query.filter_by(blog_parent = blog.blog_id).with_entities(Comment.comment).all()
 
     return redirect(url_for('main.view_blog', comment = added_comment))
 
