@@ -12,12 +12,16 @@ from ..main.mail import mail_message
 
 @main.route('/')
 def index():
-  blog1 = Blog.query.filter_by(blog_id=1).first()
-  blog2 = Blog.query.filter_by(blog_id=2).first()
-  blog3 = Blog.query.filter_by(blog_id=3).first()
+  blogList = Blog.query.order_by(Blog.blog_id).all()
+  leng = int(len(blogList))-1
+  lengt = int(len(blogList))-2
+  blog = blogList[leng]
+  blog2 = blogList[lengt]
 
   new_quote = get_quotes()
-  return render_template('index.html', new_quote = new_quote, blog1 = blog1, blog2 = blog2, blog3 = blog3)
+
+  return render_template('index.html', new_quote = new_quote, blog1 = blog, blog2 = blog2, blogList = blogList)
+
 
 @main.route('/addblog/<userLogged>', methods=["GET",'POST'])
 @login_required
@@ -33,10 +37,12 @@ def addblog(userLogged):
     db.session.add(blog)
     db.session.commit()
 
-    email_lists = ['calemasanga@gmail.com']
-    email_list = MailingList.query.filter(MailingList.email).all()
-    email_lists.append(email_list)
-    for email in email_lists:
+    email_listset = ['calemasanga@gmail.com']
+    email_list = MailingList.query.with_entities(MailingList.email).all()
+    for emailt in email_list:
+      email_listset.append(emailt)
+      return email_listset
+    for email in email_listset:
       mail_message('New Post has been made', 'email/newpost', email, user=userLogged)
 
     return redirect(url_for('main.addblogphotos',blogn = blog.blog_id, blogs=blog))
@@ -57,7 +63,7 @@ def addblogphotos(blogn):
     
     flash('photo saved')
 
-    return redirect(url_for('main.addblog', blog = blog))
+    return redirect(url_for('main.view_blog', blog = blog))
   return render_template('addblogphotos.html', form = form)
 
 @main.route('/<userLog>/<blogn>/comments', methods = ['GET', 'POST'])
@@ -78,7 +84,7 @@ def addcomment(blogn, userLog):
     return redirect(url_for('main.view_blog', comment = added_comment))
 
   comments = Comment.query.get_or_404(blog.blog_id).all()
-  return render_template('comments.html', comments = comments, form = form)
+  return render_template('main/comments.html', comments = comments, form = form)
 
 @main.route('/blog')
 def view_blog():

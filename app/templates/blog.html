@@ -18,5 +18,8 @@
   </div>
 </div>
 {%endfor%}
-
+<div class="addblog">
+  <a href="{{url_for('main.addblog', userLogged = current_user.username)}}"> <span class="plus">&plus;</span><span>Add
+      Blog</span></a>
+</div>
 {%endblock%}

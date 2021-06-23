@@ -9,46 +9,47 @@
 <div class="banner">
   <div class="card top_stories col-md-3">
     <div class="card-header">
-      {{blog3.title}}
-    </div>
-    <div class="card-body">
-      <blockquote class="blockquote mb-0">
-        <p>{{blog3.content|truncate(80,true,'...')}}</p>
-        <footer class="blockquote-footer"> {{blog3.posted_by}} <cite title="Source Title">{{blog3.category}}</cite></footer>
-      </blockquote>
-    </div>
-  </div>
-  <div class="card top_stories col-md-3">
-    <div class="card-header">
-      {{blog2.title}}
-    </div>
-    <div class="card-body">
-      <blockquote class="blockquote mb-0">
-        <p>{{blog2.content|truncate(80,true,'...')}}</p>
-        <footer class="blockquote-footer">{{blog2.posted_by}} <cite title="Source Title">{{blog2.category}}</cite></footer>
-      </blockquote>
-    </div>
-  </div>
-  <div class="card top_stories_long col-md-3">
-    <div class="card-header">
       {{blog1.title}}
     </div>
     <div class="card-body">
       <blockquote class="blockquote mb-0">
         <p>{{blog1.content|truncate(80,true,'...')}}</p>
-        <footer class="blockquote-footer">{{blog1.posted_by}}  <cite title="Source Title">{{blog1.category}}</cite></footer>
+        <footer class="blockquote-footer"> {{blog1.posted_by}} <cite title="Source Title">{{blog1.category}}</cite>
+        </footer>
       </blockquote>
     </div>
   </div>
-  
+  <div class="card top_stories col-md-3">
+    <div class="card-header">
+
+      {{blog2.title}}
+    </div>
+    <div class="card-body">
+      <blockquote class="blockquote mb-0">
+        <p>{{blog2.content|truncate(80,true,'...')}}</p>
+        <footer class="blockquote-footer">{{blog2.posted_by}} <cite title="Source Title">{{blog2.category}}</cite>
+        </footer>
+      </blockquote>
+    </div>
+  </div>
   <h3 class="titleh">Rudimental Blog</h3>
   <div class="pictorial col-md-6">
     <p>Rudimental Blog</p>
   </div>
 </div>
 <div class="row">
-<div class="black col-md-4">
-  <div class="quote">
+  <div class="navcat col-md-12">
+    <div class="">
+      <div id="menu">
+        <a class="button" href="#">Technology </a>
+        <a class="button" href="#">Lifestyle</a>
+        <a class="button" href="#">Lifes Journey</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="quote black col-md-4">
     <h4>Quote of the Hour </h4><small>No. {{new_quote.id}}</small><br>
     <cite>
       <span class="quotes">&OpenCurlyDoubleQuote;</span>
@@ -58,20 +59,21 @@
     <small>~{{new_quote.author}}</small><br>
     <small><a href='{{new_quote.link}}'>source</a></small><br>
   </div>
-</div>
-<div class="navcat col-md-5"> 
-  <div class="">
-    <div id="menu">
-      <a class="button" href="#">Technology </a>
-      <a class="button" href="#">Lifestyle</a>
-      <a class="button" href="#">Lifes Journey</a>
+  {%for blog in blogList%}
+  <div class="card top_stories col-md-3">
+    <div class="card-header">
+      {{blog.title}}
+    </div>
+    <div class="card-body">
+      <blockquote class="blockquote mb-0">
+        <p>{{blog.content|truncate(80,true,'...')}}</p>
+        <footer class="blockquote-footer"> {{blog.posted_by}} <cite title="Source Title">{{blog.category}}</cite>
+        </footer>
+      </blockquote>
     </div>
   </div>
-</div>
-<div class="col-md-5">
-  <iframe src="https://www.menshealth.com/technology-gear" frameborder="0"></iframe>
+  {%endfor%}
 
-</div>
 </div>
 <div class="addblog">
   <a href="{{url_for('main.addblog', userLogged = current_user.username)}}"> <span class="plus">&plus;</span><span>Add
