@@ -48,7 +48,6 @@ class User(UserMixin, db.Model):
   user_role = db.Column(db.Integer, db.ForeignKey('roles.role_id'))
   blog_posted = db.relationship('Blog', backref='blog_posted',lazy='dynamic')
   comments_added = db.Column(db.Integer,db.ForeignKey('comments.comment_id'))
-  email_list = db.Column(db.Integer, db.ForeignKey('emails.email_id'))
 
   def get_id(self):
     return (self.user_id)
@@ -90,7 +89,7 @@ class MailingList(db.Model):
   __tablename__='emails'
   email_id = db.Column(db.Integer, primary_key = True)
   email = db.Column(db.String())
-  user_in_list = db.relationship('User', backref = 'user_in_list', lazy= 'dynamic')
+  user_in_list = db.Column(db.String(100))
 
 class Quote:
   '''
