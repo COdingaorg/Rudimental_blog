@@ -4,7 +4,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 #creating app instance
-app = create_app('development')
+app = create_app('production')
 app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd()
 
 migrate = Migrate(app, db)
