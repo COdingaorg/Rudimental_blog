@@ -12,7 +12,7 @@ from ..main.mail import mail_message
 
 @main.route('/')
 def index():
-  blogList = Blog.query.filter_by(Blog.blog_id).all()
+  blogList = Blog.query.all()
   leng = int(len(blogList))-1
   lengt = int(len(blogList))-2
   blog = blogList[leng]

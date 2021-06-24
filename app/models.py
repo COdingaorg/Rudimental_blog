@@ -1,5 +1,3 @@
-from flask_wtf.recaptcha import validators
-from sqlalchemy.orm import backref, lazyload
 from wtforms.validators import ValidationError
 from . import db, login_manager
 import base64
