@@ -17,7 +17,7 @@
       <a class="brand" href="/">RUDIMENTAL </a>
       <a class="button" href="/">Home</a>
       <a class="button" href="{{url_for('main.view_blog')}}">All Blogs</a>
-      {%if user == f%}
+      {%if current_user.subscribed == f%}
       <a class="button" href="{{url_for('main.subscribe',userLogged = current_user.username)}}">Subscribe to Newsletter</a>
       {%else%}
       <a class="button" href="#">Subscribed :)</a>

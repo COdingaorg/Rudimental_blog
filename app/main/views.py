@@ -106,24 +106,19 @@ def view_category(url_link):
 
 @main.route('/<userLogged>/subscribed')
 @login_required
-def subscribe(self,userLogged):
-  query1 = User.session.query(User).\
-    filter(User.username == userLogged).one()
+def subscribe(userLogged):
+  query1 = User.query.filter(User.username == userLogged).first()
   if query1:
     query1.subscribed = True
     db.session.add(query1)#update({'subscribed':(t)})
     db.session.commit()
 
-  user = User.query.filter(User.subscribed == True).first()
-  if user is not None:
-    user_email = 'calemasanga@gmail.com'
-    user_email = user.email
-    new_email = MailingList(email = user_email, user_in_list = user.user_id)
-    db.session.add(new_email)
+    mail_list = MailingList(email = query1.email)
+    db.session.add(mail_list)
     db.session.commit()
 
-    return redirect(url_for('main.addblog',user = user.subscribed))
+    #   return redirect(url_for('main.addblog',user = user.subscribed))
   
   
   title = 'Subscribed successfully, Thank you'
-  return render_template('subscribed.html', user = user.subscribed, title = title)
+  return render_template('subscribed.html', user = 'user.subscribed', title = title)
